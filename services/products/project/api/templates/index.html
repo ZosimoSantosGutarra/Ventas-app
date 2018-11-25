@@ -1,0 +1,158 @@
+
+<html lang="en">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>sysVentas</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">SysVentas</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Producto</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link disabled" href="#">Compras</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link disabled" href="#">Ventas</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link disabled" href="#">Acceso</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link disabled" href="#">Facturacion</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Buscador......" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background: #28a745; color: #fff">Buscar</button>
+        </form>
+      </div>
+    </nav>
+
+    <main role="main" class="container" style="margin-top: -70px">
+      <div class="jumbotron">
+       <div class="row">
+         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <h3>Nuevo Producto</h3>
+            </div>
+         </div>
+         <form action="/" method="POST">
+           <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre..." required="" value="">
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Categoria:</label>
+            <input type="text" class="form-control" name="categoria" placeholder="Categoria..." required="" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="codigo">Codigo:</label>
+            <input type="text" class="form-control" name="codigo" placeholder="Codigo..." required="" value="">
+        </div>
+            </div>
+
+           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+         
+        <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input type="text" class="form-control" name="stock" placeholder="Stock..." required="" value="">
+        </div>
+        <div class="form-group">
+            <label for="stock">Precio de venta:</label>
+            <input type="text" class="form-control" name="precio" placeholder="Precio venta..." required="" value="">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit" style="width: 330px">Guardar</button>
+        </div>
+    </div>
+
+</div>
+         </form>
+
+         <hr class="my-4">
+         <div class="row">
+         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <h3>Listado de los Productos</h3>
+            </div>
+         </div>
+
+         <table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Codigo</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Fecha</th>
+      <th scope="col" style="text-align: center;">Acciones</th>
+    </tr>
+  </thead>
+  {% if products %}
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <th scope="row">{{product.id}}</th>
+      <th >{{product.nombre}}</th>
+      <th >{{product.categoria}}</th>
+      <th >{{product.codigo}}</th>
+      <th >{{product.stock}}</th>
+      <th >{{product.precio}}</th>
+      <th >{{product.created_date.strftime('%d-%m-%y')}}</th>
+      <td>
+        <a href="#" class="btn btn-circle btn-outline-info m-1" style="background: #17a2b8; color: #fff"> Actualizar</a>
+        <a href="" data-target="#modal-delete-9" class="btn btn-circle btn-outline-danger m-1" data-toggle="modal" style="background: #dc3545; color: #fff">
+              Eliminar
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% else %}
+            <p>No hay registro de productos</p>
+          {% endif %}
+</table>
+      </div>
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+  
+{% block js %}{% endblock %}
+</body>
+</html>
+
+
+

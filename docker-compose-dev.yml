@@ -1,0 +1,40 @@
+version: '3.0'
+
+services:
+
+  products:
+    build:
+      context: ./services/products
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/products:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@products-db:5432/products_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@products-db:5432/products_test
+    depends_on:  # <-- nuevo
+      - products-db
+
+  products-db:  
+    build:
+      context: ./services/products/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-dev
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - products
+
