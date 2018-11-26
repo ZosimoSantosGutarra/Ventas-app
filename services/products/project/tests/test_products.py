@@ -169,7 +169,7 @@ class TestProductService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/',
-                data=dict(nomb='Adaptador', cat='Sect', cod='10002', stoc='50', prec='10'),
+                data=dict(nomb='A', cat='S', cod='1', stoc='5', prec='1'),
                 follow_redirects=True
             )
             self.assertEqual(response.status_code, 200)
