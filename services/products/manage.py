@@ -5,7 +5,7 @@ import coverage
 from flask.cli import FlaskGroup
 
 from project import create_app, db   # <-- nuevo
-from project.api.models import Pdt  # <-- nuevo
+from project.api.models import Product  # <-- nuevo
 
 # configurando informes de covertura con coverage 4.5.1
 COV = coverage.coverage(
@@ -41,12 +41,12 @@ def test():
 @cli.command()
 def seed_db():
     """Seeds the database."""
-    db.session.add(Pdt(nomb='Acido Muriatigo', cat="Limpieza", cod="123456789", stoc="20", prec="2000"))
-    db.session.add(Pdt(nomb='Adaptador 36W', cat="Sect.Electrico", cod='20181109', stoc='10', prec='3000'))
-    db.session.add(Pdt(nomb='Campeon 5g', cat="Limpieza", cod='3029405', stoc='12', prec='16'))
-    db.session.add(Pdt(nomb=' BUSHING 1/2 ', cat="Conexiones", cod=' 101007', stoc='5', prec='25'))
-    db.session.add(Pdt(nomb='Cabezal chino', cat="Limpieza", cod='30102020', stoc='50', prec='10'))
-    db.session.add(Pdt(nomb='Cemento', cat="NAYLON Y OTROS", cod='12356789', stoc='100', prec='50'))
+    db.session.add(Product(nomb='Acido Muriatigo', cat="Limpieza", cod="123456789", stoc="20", prec="2000"))
+    db.session.add(Product(nomb='Adaptador 36W', cat="Sect.Electrico", cod='20181109', stoc='10', prec='3000'))
+    db.session.add(Product(nomb='Campeon 5g', cat="Limpieza", cod='3029405', stoc='12', prec='16'))
+    db.session.add(Product(nomb=' BUSHING 1/2 ', cat="Conexiones", cod=' 101007', stoc='5', prec='25'))
+    db.session.add(Product(nomb='Cabezal chino', cat="Limpieza", cod='30102020', stoc='50', prec='10'))
+    db.session.add(Product(nomb='Cemento', cat="NAYLON Y OTROS", cod='12356789', stoc='100', prec='50'))
     db.session.commit()
 
 @cli.command()
