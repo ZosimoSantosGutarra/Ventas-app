@@ -34,11 +34,11 @@ class TestProductService(BaseTestCase):
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
-                    'cat': 'Sect',
-                    'cod': '10002',
-                    'stoc': '50',
-                    'prec': '10'
+                    'nomb': 'A',
+                    'cat': 'S',
+                    'cod': '1',
+                    'stoc': '5',
+                    'prec': '1'
                 }),
                 content_type='application/json',
             )
@@ -83,16 +83,16 @@ class TestProductService(BaseTestCase):
             self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
-                    'cat': 'Artefacto'
+                    'nomb': 'A',
+                    'cat': 'S'
                 }),
                 content_type='application/json',
             )
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
-                    'cat': 'Sect'
+                    'nomb': 'A',
+                    'cat': 'S'
                 }),
                 content_type='application/json',
             )
@@ -103,16 +103,16 @@ class TestProductService(BaseTestCase):
     def test_single_product(self):
         """Asegurando de que el producto individual se comporte
         correctamente."""
-        user = add_product('Adaptador', 'Sect', '10002', '50', '10')
+        user = add_product('A', 'S', '1', '5', '1')
         with self.client:
             response = self.client.get(f'/products/{user.id}')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertIn('Adaptador', data['data']['nomb'])
-            self.assertIn('Sect', data['data']['cat'])
-            self.assertIn('10002', data['data']['cod'])
-            self.assertIn('50', data['data']['stoc'])
-            self.assertIn('10', data['data']['prec'])
+            self.assertIn('A', data['data']['nomb'])
+            self.assertIn('S', data['data']['cat'])
+            self.assertIn('1', data['data']['cod'])
+            self.assertIn('5', data['data']['stoc'])
+            self.assertIn('1', data['data']['prec'])
             self.assertIn('satisfactorio', data['estado'])
 
     def test_single_product_no_id(self):
@@ -135,19 +135,19 @@ class TestProductService(BaseTestCase):
 
     def test_all_products(self):
         """Asegurarse de que todos los productos se comporte correctamente."""
-        add_product('Adaptador', 'Sect', '10002', '50', '10')
-        add_product('Acido ', 'Limpieza', '10103', '10', '30')
+        add_product('A', 'S', '1', '5', '1')
+        add_product('Ac', 'Li', '2', '1', '3')
         with self.client:
             response = self.client.get('/products')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(data['data']['products']), 2)
-            self.assertIn('Adaptador', data['data']['products'][0]['nomb'])
+            self.assertIn('A', data['data']['products'][0]['nomb'])
             self.assertIn(
-                'Sect', data['data']['products'][0]['cat'])
-            self.assertIn('Acido', data['data']['products'][1]['nomb'])
+                'S', data['data']['products'][0]['cat'])
+            self.assertIn('Ac', data['data']['products'][1]['nomb'])
             self.assertIn(
-                'Limp', data['data']['products'][1]['cat'])
+                'Li', data['data']['products'][1]['cat'])
             self.assertIn('satisfactorio', data['estado'])
 
     def test_main_no_products(self):
@@ -158,8 +158,8 @@ class TestProductService(BaseTestCase):
     def test_main_with_products(self):
         """Ensure the main route behaves correctly when users have been
         added to the database."""
-        add_product('Adaptador', 'Sect', '10002', '50', '10')
-        add_product('Acido', 'Limpieza', '10102', '10', '30')
+        add_product('A', 'S', '1', '5', '1')
+        add_product('Ac', 'Li', '2', '1', '3')
         with self.client:
             response = self.client.get('/')
             self.assertEqual(response.status_code, 200)
