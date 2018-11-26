@@ -42,7 +42,7 @@ def add_product():
             response_object['mensaje'] = f'{nomb}ha sido agregado al registro'
             return jsonify(response_object), 201
         else:
-            response_object['mensaje'] = 'Este nombre del producto ya existe en el registro.'
+            response_object['mensaje'] = 'producto ya existe.'
             return jsonify(response_object), 400
     except exc.IntegrityError as e:
         db.session.rollback()
