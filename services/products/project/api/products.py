@@ -41,7 +41,8 @@ def add_product():
                 cat=cat, 
                 cod=cod, 
                 stoc=stoc, 
-                prec=prec))
+                prec=prec,
+                ))
             db.session.commit()
             response_object['estado'] = 'satisfactorio'
             response_object['mensaje'] = f'{nomb}ha sido agregado al registro'
@@ -108,7 +109,8 @@ def index():
             cat=cat, 
             cod=cod, 
             stoc=stoc, 
-            prec=prec))
+            prec=prec,
+            ))
         db.session.commit()
     products = Product.query.all()
     return render_template('index.html', products=products)

@@ -174,7 +174,8 @@ class TestProductService(BaseTestCase):
                     cat='Sect', 
                     cod='10002', 
                     stoc='50', 
-                    prec='10'),
+                    prec='10',
+                    ),
                 follow_redirects=True
             )
             self.assertEqual(response.status_code, 200)
