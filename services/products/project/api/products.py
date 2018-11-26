@@ -28,18 +28,18 @@ def add_product():
     }
     if not post_data:
         return jsonify(response_object), 400
-    nomb = post_data.get('nomb')
-    cat = post_data.get('cat')
-    cod = post_data.get('cod')
-    stoc = post_data.get('stoc')
-    prec = post_data.get('prec')
+    n = post_data.get('nomb')
+    c = post_data.get('cat')
+    cd = post_data.get('cod')
+    s = post_data.get('stoc')
+    p = post_data.get('prec')
     try:
-        prod = Product.query.filter_by(nomb=nomb).first()
+        prod = Product.query.filter_by(nomb=n).first()
         if not prod:
-            db.session.add(Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
+            db.session.add(Product(nomb=n, cat=c, cod=cd, stoc=s, prec=p))
             db.session.commit()
             response_object['estado'] = 'satisfactorio'
-            response_object['mensaje'] = f'{nomb}ha sido agregado al registro'
+            response_object['mensaje'] = f'{n}ha sido agregado al registro'
             return jsonify(response_object), 201
         else:
             response_object['mensaje'] = 'producto ya existe.'
@@ -93,12 +93,12 @@ def get_all_products():
 @pro_blueprint.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        nomb = request.form['nomb']
-        cat = request.form['cat']
-        cod = request.form['cod']
-        stoc = request.form['stoc']
-        prec = request.form['prec']
-        db.session.add(Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
+        n = request.form['nomb']
+        c = request.form['cat']
+        cd = request.form['cod']
+        s = request.form['stoc']
+        p = request.form['prec']
+        db.session.add(Product(nomb=n, cat=c, cod=cd, stoc=s, prec=p))
         db.session.commit()
     products = Product.query.all()
     return render_template('index.html', products=products)
