@@ -1,9 +1,9 @@
 # services/products/manage.py
 
-
 import unittest
 import coverage
 from flask.cli import FlaskGroup
+
 from project import create_app, db   # <-- nuevo
 from project.api.models import Product  # <-- nuevo
 
@@ -68,3 +68,4 @@ def cov():
 
 if __name__ == '__main__':
     cli()
+
