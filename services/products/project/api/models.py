@@ -8,26 +8,26 @@ class Product(db.Model):
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(50), nullable=False)
-    categoria = db.Column(db.String(50), nullable=False)
-    codigo = db.Column(db.String(20), nullable=False)
-    stock = db.Column(db.String(20), nullable=False)
-    precio = db.Column(db.String(128), nullable=False)
+    nomb = db.Column(db.String(50), nullable=False)
+    cat = db.Column(db.String(50), nullable=False)
+    cod = db.Column(db.String(20), nullable=False)
+    stoc = db.Column(db.String(20), nullable=False)
+    prec = db.Column(db.String(128), nullable=False)
     created_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
     def to_json(self):
         return {
             'id': self.id,
-            'nombre': self.nombre,
-            'categoria': self.categoria,
-            'codigo': self.codigo,
-            'stock': self.stock,
-            'precio': self.precio
+            'nomb': self.nomb,
+            'cat': self.cat,
+            'cod': self.cod,
+            'stoc': self.stoc,
+            'prec': self.prec
         }
 
-    def __init__(self, nombre, categoria, codigo, stock, precio):
-        self.nombre = nombre
-        self.categoria = categoria
-        self.codigo = codigo
-        self.stock = stock
-        self.precio = precio
+    def __init__(self, nomb, cat, cod, stoc, prec):
+        self.nomb = nomb
+        self.cat = cat
+        self.cod = cod
+        self.stoc = stoc
+        self.prec = prec

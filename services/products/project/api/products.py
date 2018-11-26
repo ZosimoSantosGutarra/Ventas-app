@@ -8,10 +8,10 @@ from project import db
 from sqlalchemy import exc
 
 
-products_blueprint = Blueprint('products', __name__, template_folder='./templates')
+pro_blueprint = Blueprint('products', __name__, template_folder='./templates')
 
 
-@products_blueprint.route('/products/ping', methods=['GET'])
+@pro_blueprint.route('/products/ping', methods=['GET'])
 def ping_pong():
     return jsonify({
         'estado': 'satisfactorio',
@@ -19,7 +19,7 @@ def ping_pong():
     })
 
 
-@products_blueprint.route('/products', methods=['POST'])
+@pro_blueprint.route('/products', methods=['POST'])
 def add_product():
     post_data = request.get_json()
     response_object = {
@@ -28,19 +28,18 @@ def add_product():
     }
     if not post_data:
         return jsonify(response_object), 400
-    nombre = post_data.get('nombre')
-    categoria = post_data.get('categoria')
-    codigo = post_data.get('codigo')
-    stock = post_data.get('stock')
-    precio = post_data.get('precio')
+    nomb = post_data.get('nomb')
+    cat = post_data.get('cat')
+    cod = post_data.get('cod')
+    stoc = post_data.get('stoc')
+    prec = post_data.get('prec')
     try:
-        prod = Product.query.filter_by(nombre=nombre).first()
+        prod = Product.query.filter_by(nomb=nomb).first()
         if not prod:
-            db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo,
-                                   stock=stock, precio=precio))
+            db.session.add(Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
             db.session.commit()
             response_object['estado'] = 'satisfactorio'
-            response_object['mensaje'] = f'{nombre}ha sido agregado al registro'
+            response_object['mensaje'] = f'{nomb}ha sido agregado al registro'
             return jsonify(response_object), 201
         else:
             response_object['mensaje'] = 'Este nombre del producto ya existe en el registro.'
@@ -50,7 +49,7 @@ def add_product():
         return jsonify(response_object), 400
 
 
-@products_blueprint.route('/products/<product_id>', methods=['GET'])
+@pro_blueprint.route('/products/<product_id>', methods=['GET'])
 def get_single_product(product_id):
     """Obteniendo detalles de un unico producto"""
     response_object = {
@@ -67,11 +66,11 @@ def get_single_product(product_id):
                 'estado': 'satisfactorio',
                 'data': {
                     'id': prod.id,
-                    'nombre': prod.nombre,
-                    'categoria': prod.categoria,
-                    'codigo': prod.codigo,
-                    'stock': prod.stock,
-                    'precio': prod.precio
+                    'nomb': prod.nomb,
+                    'cat': prod.cat,
+                    'cod': prod.cod,
+                    'stoc': prod.stoc,
+                    'prec': prod.prec
                 }
             }
             return jsonify(response_object), 200
@@ -79,8 +78,7 @@ def get_single_product(product_id):
         return jsonify(response_object), 404
 
 
-
-@products_blueprint.route('/products', methods=['GET'])
+@pro_blueprint.route('/products', methods=['GET'])
 def get_all_products():
     """Get all products"""
     response_object = {
@@ -92,40 +90,15 @@ def get_all_products():
     return jsonify(response_object), 200
 
 
-@products_blueprint.route('/products/<product_id>', methods=['PUT', 'DELETE'])
-def single_product(product_id):
-    response_object = {
-      'status': 'success',
-      'container_id': os.uname()[1]
-    }
-    produ = Product.query.filter_by(id=product_id).first()
-    if request.method == 'PUT':
-        post_data = request.get_json()
-        produ.nombre = post_data.get('nombre')
-        produ.categoria = post_data.get('categoria')
-        produ.codigo = post_data.get('codigo')
-        produ.stock = post_data.get('stock')
-        produ.precio = post_data.get('precio')
-        db.session.commit()
-        response_object['message'] = 'Producto actualizado!'
-    if request.method == 'DELETE':
-        db.session.delete(produ)
-        db.session.commit()
-        response_object['message'] = 'Producto Eliminado!'
-    return jsonify(response_object)
-
-
-
-@products_blueprint.route('/', methods=['GET', 'POST'])
+@pro_blueprint.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        categoria = request.form['categoria']
-        codigo = request.form['codigo']
-        stock = request.form['stock']
-        precio = request.form['precio']
-        db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo, 
-            stock=stock, precio=precio))
+        nomb = request.form['nomb']
+        cat = request.form['cat']
+        cod = request.form['cod']
+        stoc = request.form['stoc']
+        prec = request.form['prec']
+        db.session.add(Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
         db.session.commit()
     products = Product.query.all()
     return render_template('index.html', products=products)

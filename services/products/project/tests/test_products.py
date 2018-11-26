@@ -9,8 +9,8 @@ import unittest
 from project.tests.base import BaseTestCase
 
 
-def add_product(nombre, categoria, codigo, stock, precio):
-    prod = Product(nombre=nombre, categoria=categoria, codigo=codigo, stock=stock, precio=precio)
+def add_product(nomb, cat, cod, stoc, prec):
+    prod = Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec)
     db.session.add(prod)
     db.session.commit()
     return prod
@@ -34,11 +34,11 @@ class TestProductService(BaseTestCase):
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nombre': 'Adaptador universal ',
-                    'categoria': 'Sect.Electrico',
-                    'codigo': '10002000',
-                    'stock': '50',
-                    'precio': '10'
+                    'nomb': 'Adaptador universal ',
+                    'cat': 'Sect.Electrico',
+                    'cod': '10002000',
+                    'stoc': '50',
+                    'prec': '10'
                 }),
                 content_type='application/json',
             )
@@ -68,7 +68,7 @@ class TestProductService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/products',
-                data=json.dumps({'nombre': 'Adaptador universal'}),
+                data=json.dumps({'nomb': 'Adaptador universal'}),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
@@ -83,16 +83,16 @@ class TestProductService(BaseTestCase):
             self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nombre': 'Adaptador universal',
-                    'categoria': 'Artefacto'
+                    'nomb': 'Adaptador universal',
+                    'cat': 'Artefacto'
                 }),
                 content_type='application/json',
             )
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nombre': 'Adaptador universal',
-                    'categoria': 'Sect.Electrico'
+                    'nomb': 'Adaptador universal',
+                    'cat': 'Sect.Electrico'
                 }),
                 content_type='application/json',
             )
@@ -108,11 +108,11 @@ class TestProductService(BaseTestCase):
             response = self.client.get(f'/products/{user.id}')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertIn('Adaptador universal', data['data']['nombre'])
-            self.assertIn('Sect.Electrico', data['data']['categoria'])
-            self.assertIn('10002000', data['data']['codigo'])
-            self.assertIn('50', data['data']['stock'])
-            self.assertIn('10', data['data']['precio'])
+            self.assertIn('Adaptador universal', data['data']['nomb'])
+            self.assertIn('Sect.Electrico', data['data']['cat'])
+            self.assertIn('10002000', data['data']['cod'])
+            self.assertIn('50', data['data']['stoc'])
+            self.assertIn('10', data['data']['prec'])
             self.assertIn('satisfactorio', data['estado'])
 
     def test_single_product_no_id(self):
@@ -142,12 +142,12 @@ class TestProductService(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(data['data']['products']), 2)
-            self.assertIn('Adaptador universal', data['data']['products'][0]['nombre'])
+            self.assertIn('Adaptador universal', data['data']['products'][0]['nomb'])
             self.assertIn(
-                'Sect.Electrico', data['data']['products'][0]['categoria'])
-            self.assertIn('Acido Muriatigo', data['data']['products'][1]['nombre'])
+                'Sect.Electrico', data['data']['products'][0]['cat'])
+            self.assertIn('Acido Muriatigo', data['data']['products'][1]['nomb'])
             self.assertIn(
-                'Limpieza', data['data']['products'][1]['categoria'])
+                'Limpieza', data['data']['products'][1]['cat'])
             self.assertIn('satisfactorio', data['estado'])
 
     def test_main_no_products(self):
@@ -169,7 +169,7 @@ class TestProductService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/',
-                data=dict(nombre='Adaptador universal', categoria='Sect.Electrico', codigo='10002000', stock='50', precio='10'),
+                data=dict(nomb='Adaptador universal', cat='Sect.Electrico', cod='10002000', stoc='50', prec='10'),
                 follow_redirects=True
             )
             self.assertEqual(response.status_code, 200)

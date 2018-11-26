@@ -41,12 +41,12 @@ def test():
 @cli.command()
 def seed_db():
     """Seeds the database."""
-    db.session.add(Product(nombre='Acido Muriatigo', categoria="Limpieza", codigo="123456789", stock="20", precio="2000"))
-    db.session.add(Product(nombre='Adaptador 36W', categoria="Sect.Electrico", codigo='20181109', stock='10', precio='3000'))
-    db.session.add(Product(nombre='Campeon 5g', categoria="Limpieza", codigo='3029405', stock='12', precio='16'))
-    db.session.add(Product(nombre=' BUSHING 1/2 ', categoria="Conexiones", codigo=' 101007', stock='5', precio='25'))
-    db.session.add(Product(nombre='Cabezal chino', categoria="Limpieza", codigo='30102020', stock='50', precio='10'))
-    db.session.add(Product(nombre='Cemento', categoria="NAYLON Y OTROS", codigo='12356789', stock='100', precio='50'))
+    db.session.add(Product(nomb='Acido Muriatigo', cat="Limpieza", cod="123456789", stoc="20", prec="2000"))
+    db.session.add(Product(nomb='Adaptador 36W', cat="Sect.Electrico", cod='20181109', stoc='10', prec='3000'))
+    db.session.add(Product(nomb='Campeon 5g', cat="Limpieza", cod='3029405', stoc='12', prec='16'))
+    db.session.add(Product(nomb=' BUSHING 1/2 ', cat="Conexiones", cod=' 101007', stoc='5', prec='25'))
+    db.session.add(Product(nomb='Cabezal chino', cat="Limpieza", cod='30102020', stoc='50', prec='10'))
+    db.session.add(Product(nomb='Cemento', cat="NAYLON Y OTROS", cod='12356789', stoc='100', prec='50'))
     db.session.commit()
 
 @cli.command()

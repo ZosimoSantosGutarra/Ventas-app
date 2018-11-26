@@ -28,8 +28,8 @@ def create_app(script_info=None):
     db.init_app(app)
 
     # registro blueprints
-    from project.api.products import products_blueprint
-    app.register_blueprint(products_blueprint)
+    from project.api.products import pro_blueprint
+    app.register_blueprint(pro_blueprint)
 
     # contexto de shell for flask cli
     @app.shell_context_processor
@@ -37,4 +37,4 @@ def create_app(script_info=None):
         return {'app': app, 'db': db}
 
     return app
-
+    

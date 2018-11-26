@@ -62,29 +62,29 @@
            <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
               <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre..." required="" value="">
+            <label for="nomb">Nombre:</label>
+            <input type="text" class="form-control" name="nomb" placeholder="Nombre..." required="" value="">
         </div>
         <div class="form-group">
-            <label for="descripcion">Categoria:</label>
-            <input type="text" class="form-control" name="categoria" placeholder="Categoria..." required="" value="">
+            <label for="cat">Categoria:</label>
+            <input type="text" class="form-control" name="cat" placeholder="Categoria..." required="" value="">
         </div>
 
         <div class="form-group">
-            <label for="codigo">Codigo:</label>
-            <input type="text" class="form-control" name="codigo" placeholder="Codigo..." required="" value="">
+            <label for="cod">Codigo:</label>
+            <input type="text" class="form-control" name="cod" placeholder="Codigo..." required="" value="">
         </div>
             </div>
 
            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
          
         <div class="form-group">
-            <label for="stock">Stock:</label>
-            <input type="text" class="form-control" name="stock" placeholder="Stock..." required="" value="">
+            <label for="stoc">Stock:</label>
+            <input type="text" class="form-control" name="stoc" placeholder="Stock..." required="" value="">
         </div>
         <div class="form-group">
-            <label for="stock">Precio de venta:</label>
-            <input type="text" class="form-control" name="precio" placeholder="Precio venta..." required="" value="">
+            <label for="prec">Precio de venta:</label>
+            <input type="text" class="form-control" name="prec" placeholder="Precio venta..." required="" value="">
         </div>
 
         <div class="form-group">
@@ -120,11 +120,11 @@
     {% for product in products %}
     <tr>
       <th scope="row">{{product.id}}</th>
-      <th >{{product.nombre}}</th>
-      <th >{{product.categoria}}</th>
-      <th >{{product.codigo}}</th>
-      <th >{{product.stock}}</th>
-      <th >{{product.precio}}</th>
+      <th >{{product.nomb}}</th>
+      <th >{{product.cat}}</th>
+      <th >{{product.cod}}</th>
+      <th >{{product.stoc}}</th>
+      <th >{{product.prec}}</th>
       <th >{{product.created_date.strftime('%d-%m-%y')}}</th>
       <td>
         <a href="#" class="btn btn-circle btn-outline-info m-1" style="background: #17a2b8; color: #fff"> Actualizar</a>
