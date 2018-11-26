@@ -10,10 +10,10 @@ from project.tests.base import BaseTestCase
 
 
 def add_product(nombre, categoria, codigo, stock, precio):
-    user = Product(nombre=nombre, categoria=categoria, codigo=codigo, stock=stock, precio=precio)
-    db.session.add(user)
+    prod = Product(nombre=nombre, categoria=categoria, codigo=codigo, stock=stock, precio=precio)
+    db.session.add(prod)
     db.session.commit()
-    return user
+    return prod
 
 
 class TestProductService(BaseTestCase):

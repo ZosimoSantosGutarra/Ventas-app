@@ -36,10 +36,11 @@ def add_product():
     try:
         prod = Product.query.filter_by(nombre=nombre).first()
         if not prod:
-            db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo, stock=stock, precio=precio))
+            db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo,
+                                   stock=stock, precio=precio))
             db.session.commit()
             response_object['estado'] = 'satisfactorio'
-            response_object['mensaje'] = f'{nombre}{categoria} ha sido agregado al registro'
+            response_object['mensaje'] = f'{nombre}ha sido agregado al registro'
             return jsonify(response_object), 201
         else:
             response_object['mensaje'] = 'Este nombre del producto ya existe en el registro.'
@@ -123,7 +124,8 @@ def index():
         codigo = request.form['codigo']
         stock = request.form['stock']
         precio = request.form['precio']
-        db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo, stock=stock, precio=precio))
+        db.session.add(Product(nombre=nombre, categoria=categoria, codigo=codigo, 
+            stock=stock, precio=precio))
         db.session.commit()
     products = Product.query.all()
     return render_template('index.html', products=products)
