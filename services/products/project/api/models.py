@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from project import db
 
 
-class Product(db.Model):
+class Pdt(db.Model):
 
     __tablename__ = 'products'
 

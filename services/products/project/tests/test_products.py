@@ -1,7 +1,7 @@
 # services/products/project/tests/test_products.py
 
 from project import db
-from project.api.models import Product
+from project.api.models import Pdt
 
 import json
 import unittest
@@ -10,7 +10,7 @@ from project.tests.base import BaseTestCase
 
 
 def add_product(nomb, cat, cod, stoc, prec):
-    prod = Product(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec)
+    prod = Pdt(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec)
     db.session.add(prod)
     db.session.commit()
     return prod
@@ -34,7 +34,7 @@ class TestProductService(BaseTestCase):
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
+                    'nomb': 'Adap',
                     'cat': 'Sect',
                     'cod': '10002',
                     'stoc': '50',
@@ -83,7 +83,7 @@ class TestProductService(BaseTestCase):
             self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
+                    'nomb': 'Adap',
                     'cat': 'Artefacto'
                 }),
                 content_type='application/json',
@@ -91,7 +91,7 @@ class TestProductService(BaseTestCase):
             response = self.client.post(
                 '/products',
                 data=json.dumps({
-                    'nomb': 'Adaptador',
+                    'nomb': 'Adap',
                     'cat': 'Sect'
                 }),
                 content_type='application/json',
@@ -103,12 +103,12 @@ class TestProductService(BaseTestCase):
     def test_single_product(self):
         """Asegurando de que el producto individual se comporte
         correctamente."""
-        user = add_product('Adaptador', 'Sect', '10002', '50', '10')
+        user = add_product('Adap', 'Sect', '10002', '50', '10')
         with self.client:
             response = self.client.get(f'/products/{user.id}')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertIn('Adaptador', data['data']['nomb'])
+            self.assertIn('Adap', data['data']['nomb'])
             self.assertIn('Sect', data['data']['cat'])
             self.assertIn('10002', data['data']['cod'])
             self.assertIn('50', data['data']['stoc'])
@@ -135,14 +135,14 @@ class TestProductService(BaseTestCase):
 
     def test_all_products(self):
         """Asegurarse de que todos los productos se comporte correctamente."""
-        add_product('Adaptador', 'Sect', '10002', '50', '10')
+        add_product('Adap', 'Sect', '10002', '50', '10')
         add_product('Acido ', 'Limpieza', '10103', '10', '30')
         with self.client:
             response = self.client.get('/products')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(data['data']['products']), 2)
-            self.assertIn('Adaptador', data['data']['products'][0]['nomb'])
+            self.assertIn('Adap', data['data']['products'][0]['nomb'])
             self.assertIn(
                 'Sect', data['data']['products'][0]['cat'])
             self.assertIn('Acido', data['data']['products'][1]['nomb'])
@@ -158,7 +158,7 @@ class TestProductService(BaseTestCase):
     def test_main_with_products(self):
         """Ensure the main route behaves correctly when users have been
         added to the database."""
-        add_product('Adaptador', 'Sect', '10002', '50', '10')
+        add_product('Adap', 'Sect', '10', '50', '10')
         add_product('Acido', 'Limpieza', '10102', '10', '30')
         with self.client:
             response = self.client.get('/')
@@ -169,13 +169,7 @@ class TestProductService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/',
-                data=dict(
-                    nomb='Adaptador', 
-                    cat='Sect', 
-                    cod='10002', 
-                    stoc='50', 
-                    prec='10',
-                    ),
+                data=dict(nomb='Adap', cat='Sect', cod='10', stoc='50', prec='10'),
                 follow_redirects=True
             )
             self.assertEqual(response.status_code, 200)

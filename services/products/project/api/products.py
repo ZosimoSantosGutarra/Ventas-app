@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, request, render_template
 
-from project.api.models import Product
+from project.api.models import Pdt
 from project import db
 
 from sqlalchemy import exc
@@ -34,15 +34,9 @@ def add_product():
     stoc = post_data.get('stoc')
     prec = post_data.get('prec')
     try:
-        prod = Product.query.filter_by(nomb=nomb).first()
+        prod = Pdt.query.filter_by(nomb=nomb).first()
         if not prod:
-            db.session.add(Product(
-                nomb=nomb,
-                cat=cat, 
-                cod=cod, 
-                stoc=stoc, 
-                prec=prec,
-                ))
+            db.session.add(Pdt(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
             db.session.commit()
             response_object['estado'] = 'satisfactorio'
             response_object['mensaje'] = f'{nomb}ha sido agregado al registro'
@@ -64,7 +58,7 @@ def get_single_product(product_id):
     }
 
     try:
-        prod = Product.query.filter_by(id=int(product_id)).first()
+        prod = Pdt.query.filter_by(id=int(product_id)).first()
         if not prod:
             return jsonify(response_object), 404
         else:
@@ -90,7 +84,7 @@ def get_all_products():
     response_object = {
         'estado': 'satisfactorio',
         'data': {
-            'products': [prod.to_json() for prod in Product.query.all()]
+            'products': [prod.to_json() for prod in Pdt.query.all()]
         }
     }
     return jsonify(response_object), 200
@@ -104,13 +98,7 @@ def index():
         cod = request.form['cod']
         stoc = request.form['stoc']
         prec = request.form['prec']
-        db.session.add(Product(
-            nomb=nomb, 
-            cat=cat, 
-            cod=cod, 
-            stoc=stoc, 
-            prec=prec,
-            ))
+        db.session.add(Pdt(nomb=nomb, cat=cat, cod=cod, stoc=stoc, prec=prec))
         db.session.commit()
-    products = Product.query.all()
+    products = Pdt.query.all()
     return render_template('index.html', products=products)
